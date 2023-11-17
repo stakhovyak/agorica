@@ -1,0 +1,140 @@
+* Agoriqa - text game
+
+** 5 rooms
+*** props:
+- color
+- description
+- objects present inside
+
+** rooms are in list structure
+
+g -green, y -yellow, r -red, o -orange, p - pink,
+
+\\ the description char* for each Room struct member will be written from the file (f.e. description.txt) like so:
+
+({1} <- the description of room 1 {3} <- for color blue
+The room is blah blah fjflkdkfj;d
+fjdljejelejjl ldj
+lejlejj lejljflkjficicicici . khekjhkjhe.
+shkjhef, hek, jehs;a;d, blah blah blha
+)
+
+({3} <- the description of room 3 {2} <- for color green
+The room is 15727 7737 646 736 79 0303030 938602094857 9847
+494385 9 8 759  9 857 94845749 857 948 7 7 7
+939939939 kfkjfkjh3jh4kjrjkjhkjhlgrlgr............
+)
+
+({2}{1}
+The room hkdfjhsfkkej hlejh ll l l l el elfelkhwl kewhjw lkj ewlk
+e;kfjhe ;wkjhewf;j h;jfeh; jh ;jhew ;kj hf;w kejf ;hewkjf
+h fkjw hf;kewjh;wek jh ewkjhw; kjhwf ;kj fh kjfh
+w;efjh ;k fjh;ewkjfh;ewkjh;kjhf;kjh;kjfewh;kfewjhew;fjf
+
+;ewjfhwe;f kjhfjekjhfkjh kjhfjfhejehkjhekejhekfhf
+)
+
+** objects in rooms
+
+\\ each room has its own list of objects, which will be defined in file (f.e. objects.txt) like so:
+
+{in which room}{can\cant be taken}{With which object it can be used}
+
+({1}{}{} <- means that the object is in room 1
+[Object Name]
+description of the object.....
+)
+
+({3}{cbt}{}
+[Camera]
+The thing is capable of doing great photos!
+)
+
+({1}{ctbt}{}
+[Door]
+The door, but what's behind? You need a key for that
+)
+
+({2}{cbt}{Door}
+[Key]
+You can open the door with this thing.
+)
+
+
+
+There should be a function to parse text inside of () parentheses and every () expression has to have {} with a number inside.
+
+#+BEGIN_EXAMPLE c
+
+  /* the function returns complete list of rooms */
+  read_config_files(char* path_name, char *desctiption_file_name, char *objects_file_name);
+
+#+END_EXAMPLE 
+
+** how to play
+
+\\ there will be a prompt that displays the info of room, f.e.
+
+Green room (3) /* red and the number are taken from the config file */
+~ ~ ~
+The room is 15727 7737 646 736 79 0303030 938602094857 9847
+494385 9 8 759  9 857 94845749 857 948 7 7 7
+939939939 kfkjfkjh3jh4kjrjkjhkjhlgrlgr............
+
+The room contains Camera
+The thing is capable of doing great photos!
+~ ~ ~
+what will you do?
+$ take Camera
+the Camera is taken and placed in your inventary.
+what will you do next?
+$ see inventary
+Pie, Camera, photo1
+what's next?
+$ see room
+Green room (3)
+~ ~ ~
+The room is 15727 7737 646 736 79 0303030 938602094857 9847
+494385 9 8 759  9 857 94845749 857 948 7 7 7
+939939939 kfkjfkjh3jh4kjrjkjhkjhlgrlgr............
+~ ~ ~
+what will you do?
+$ go to 2
+Yellow Room (2)
+~ ~ ~
+The room hkdfjhsfkkej hlejh ll l l l el elfelkhwl kewhjw lkj ewlk
+e;kfjhe ;wkjhewf;j h;jfeh; jh ;jhew ;kj hf;w kejf ;hewkjf
+h fkjw hf;kewjh;wek jh ewkjhw; kjhwf ;kj fh kjfh
+w;efjh ;k fjh;ewkjfh;ewkjh;kjhf;kjh;kjfewh;kfewjhew;fjf
+
+;ewjfhwe;f kjhfjekjhfkjh kjhfjfhejehkjhekejhekfhf
+
+The room contains Pear
+Very healthy.
+~ ~ ~
+what will you do?
+$ take Pear
+The Pear is taken and placed in your inventory.
+what's next?
+$ see inventory
+Pie, Camera, photo1, Pear
+$ see Camera
+The thing is capable of doing great photos!
+$ see Pear
+Very healthy.
+$ use Pear
+You ate the pear.
+$ see inventory
+Pie, Camera, photo1
+$ use Camera
+The photo2 has been taken and placed in your inventory.
+$ see inventory
+Pie, Camera, photo1, photo2
+$ see photo2
+The room hkdfjhsfkkej hlejh ll l l l el elfelkhwl kewhjw lkj ewlk
+e;kfjhe ;wkjhewf;j h;jfeh; jh ;jhew ;kj hf;w kejf ;hewkjf
+h fkjw hf;kewjh;wek jh ewkjhw; kjhwf ;kj fh kjfh
+w;efjh ;k fjh;ewkjfh;ewkjh;kjhf;kjh;kjfewh;kfewjhew;fjf
+
+;ewjfhwe;f kjhfjekjhfkjh kjhfjfhejehkjhekejhekfhf
+What's next?
